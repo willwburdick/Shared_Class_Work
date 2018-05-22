@@ -1,0 +1,91 @@
+# ----------------------------------------------------------------------------------------------------------------------
+# Title: Assignment 08
+# Dev: RRoot
+# Date: 05/21/2018
+# ChangeLog: WBurdick
+# Date Changed: 05/21/2018
+# Description: Store and process Product Data using previous code. Added Class: Product to store name and value
+# ----------------------------------------------------------------------------------------------------------------------
+# Assignment instructions: create one or more classes to store and process Product data using the previous code.
+# ----------------------------------------------------------------------------------------------------------------------
+#Data
+objFile = None #File Handle
+strUserInput = None #A string which holds user input
+
+class Product(object):
+    # --Product Constructor--
+    def __init__(self, ID, ProductName, Price):  # Constructor will have three attributes
+        # Attributes
+        self.ID = ID  # First attribute will be an ID for the entry
+        self.ProductName = ProductName  # Second attribute will be the Product name
+        self.Price = Price  # Third attribute will be the Price
+
+        # --Properties--
+        # Product Name
+        # ID
+        @property  # (getter)  # Defining the property of the first attribute, ID
+        def ID(self):
+            return self.__ID
+
+        @ID.setter  # (setter)
+        def ID(self, Value):
+            self.__ID = Value
+
+        # Product
+        @property  # (getter)  # Defining the property of the second attribute, Product
+        def ProductName(self):
+            return self.__ProductName
+
+        @ProductName.setter  # (setter)
+        def ProductName(self, Value):
+            self.__ProductName = Value
+
+        # Price
+        @property  # (getter)  # Defining the property of the third attribute, Price
+        def Price(self):
+            return self.__Price
+
+        @ProductName.setter  # (setter)
+        def Price(self, Value):
+            self.__Price = Value
+
+        def ToString(self):  # Setting the string to return the three items
+            return self.ID + " " + self.Product + " " + self.Price
+
+        def __str__(self):
+            """Implictly returns field data"""
+            return self.ToString()
+# ----------------------------------------------------------------------------------------------------------------------
+#Processing
+def WriteProductUserInput(File):
+  try:
+    print("Type in a Product Id, Name, and Price you want to add to the file")
+    print("(Enter 'Exit' to quit!)")
+    while(True):
+      print("Enter the ID, Name, and Price (ex 1, Soap, 10):")
+      objProduct = Product(input())
+      if(objProduct.lower == "exit"): break
+      else: File.write(ToString + "\n")
+  except Exception as e:
+    print("Error: " + str(e))
+
+def ReadAllFileData(File, Message="Contents of File"):
+  try:
+    print(Message)
+    File.seek(0)
+    print(File.read())
+  except Exception as e:
+    print("Error: " + str(e))
+# ----------------------------------------------------------------------------------------------------------------------
+#I/O
+try:
+  objFile = open("D:\UW_Python_Class\Assignment08\Product.txt", "r+")
+  ReadAllFileData(objFile, "Here is the current data:")
+  WriteProductUserInput(objFile)
+  ReadAllFileData(objFile, "Here is this data was saved:")
+except FileNotFoundError as e:
+     print("Error: " + str(e) + "\n Please check the file name")
+except Exception as e:
+    print("Error: " + str(e))
+finally:
+  if(objFile != None):objFile.close()
